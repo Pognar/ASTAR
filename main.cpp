@@ -10,24 +10,32 @@
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "/10 Intellect(Smart)", "/10 Stamina(Smoker)", "/10 Stamina(Average)", "/10 Stamina(Healthy)", "/10 Mastery(Inept)", "/10 Mastery(Average)", "/10 Mastery(Skilled)", "/10 Versatility(Useless)", "/10 Versatility(Average)", "/10 Versatility(Competent)"};
+//int i = 0;
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	void signalHandler(tgui::EditBox::Ptr statbox)
+	void signalHandler(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr checkbox)
 	{
 		auto val = (rand() % 10) + 1;
-		auto i = val;
-		if (i <= 4){
+		int i = val;
+		if (val <= 4){
 		statbox->setText(std::to_string(val).append(globaltraits[0]));
-		} else if (i >= 4 && i <= 7){
+		} else if (val >= 4 && val <= 7){
 		statbox->setText(std::to_string(val).append(globaltraits[1]));
-		} else if (i >= 8){
+		} else if (val >= 8){
 		statbox->setText(std::to_string(val).append(globaltraits[2]));
+
+	}
+		if (i>0)
+		{
+			i = i*2;
+			checkbox->setText(std::to_string(i));
+			
+		}
 		
 	}
-	}
 
-	void signalHandler_2(tgui::EditBox::Ptr statbox_2)
+	void signalHandler_2(tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr checkbox)
 	{
 		auto val = (rand() % 10) + 1;
 		auto i = val;
@@ -40,7 +48,7 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 	}
 	}
 
-	void signalHandler_3(tgui::EditBox::Ptr statbox_3)
+	void signalHandler_3(tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr checkbox)
 	{
 		auto val = (rand() % 10) + 1;
 		auto i = val;
@@ -53,7 +61,7 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 	}
 	}
 
-	void signalHandler_4(tgui::EditBox::Ptr statbox_4)
+	void signalHandler_4(tgui::EditBox::Ptr statbox_4, tgui::EditBox::Ptr checkbox)
 	{
 		auto val = (rand() % 10) + 1;
 		auto i = val;
@@ -65,7 +73,7 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 		statbox_4->setText(std::to_string(val).append(globaltraits[11]));
 	}
 	}
-	void signalMeaning(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr statbox_4)
+	void signalMeaning(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr statbox_4, tgui::EditBox::Ptr checkbox)
 	{
 		sf::RenderWindow window_2(sf::VideoMode{800, 600}, "Stat Meanings");
 		tgui::Gui gui2{window_2};
@@ -90,7 +98,7 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 			sf::Event event_2;
 			while (window_2.pollEvent(event_2))
 			{
-			text1.setString(statbox->getText());
+			text1.setString(checkbox->getText());
 			//titletext.setString(titlebox->getText());
 
 
@@ -184,21 +192,23 @@ int main()
 		gui.add(statbox_3);
 	tgui::EditBox::Ptr statbox_4 = tgui::EditBox::create();
 		gui.add(statbox_4);
+	tgui::EditBox::Ptr checkbox = tgui::EditBox::create();
+		gui.add(checkbox);
 	
 	tgui::Button::Ptr meaningbutton = tgui::Button::create(); //meaning button
 		gui.add(meaningbutton);
-		meaningbutton->connect("pressed", signalMeaning, std::ref(statbox), std::ref(statbox_2), std::ref(statbox_3), std::ref(statbox_4));
+		meaningbutton->connect("pressed", signalMeaning, std::ref(statbox), std::ref(statbox_2), std::ref(statbox_3), std::ref(statbox_4), std::ref(checkbox));
 	
 
 	tgui::Button::Ptr button = tgui::Button::create();
 		gui.add(button);
-		button->connect("pressed", signalHandler, std::ref(statbox));
+		button->connect("pressed", signalHandler, std::ref(statbox), std::ref(checkbox));
 	tgui::Button::Ptr button_2 = tgui::Button::create();
-		button->connect("pressed", signalHandler_2, std::ref(statbox_2));
+		button->connect("pressed", signalHandler_2, std::ref(statbox_2), std::ref(checkbox));
 	tgui::Button::Ptr button_3 = tgui::Button::create();
-		button->connect("pressed", signalHandler_3, std::ref(statbox_3));
+		button->connect("pressed", signalHandler_3, std::ref(statbox_3), std::ref(checkbox));
 	tgui::Button::Ptr button_4 = tgui::Button::create();
-		button->connect("pressed", signalHandler_4, std::ref(statbox_4));
+		button->connect("pressed", signalHandler_4, std::ref(statbox_4), std::ref(checkbox));
 
 
 	statbox->setSize({190, 20});
@@ -238,6 +248,7 @@ int main()
 		
 	if (event.key.code == sf::Keyboard::Return)
 	{
+		//std:: cout << i << std::endl;
 		
 		text.setString(namebox->getText());
 		titletext.setString(titlebox->getText());
