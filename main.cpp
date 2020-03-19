@@ -69,18 +69,43 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 	{
 		sf::RenderWindow window_2(sf::VideoMode{800, 600}, "Stat Meanings");
 		tgui::Gui gui2{window_2};
-		auto val = (rand() % 10) + 1;
+		//int stam = std::stoi(statbox->getText());
+		//int vers = std::stoi(statbox_2->getText());
+		//std::string Damage = (stam*2 + vers*2);
+		sf::Text text1;
+		sf::Font font1;
+		text1.setFont(font1);
+		text1.setCharacterSize(40);
+		text1.setFillColor(sf::Color::White);
+		text1.setString("");
+		text1.setPosition(sf::Vector2f(20.f, 100.f));
+
+		if (!font1.loadFromFile("Manjari-Thin.otf"))
+	{
+	std::cout << "pucko" << std::endl;
+	}
 	
 		while (window_2.isOpen())
 		{
 			sf::Event event_2;
 			while (window_2.pollEvent(event_2))
 			{
+			text1.setString(statbox->getText());
+			//titletext.setString(titlebox->getText());
+
+
+
 			if (event_2.type == sf::Event::Closed)
 				window_2.close();
 			gui2.handleEvent(event_2);
 			}
+
+
+
+
+
 		window_2.clear();
+		window_2.draw(text1);
 		window_2.display();
 		}
 	}
