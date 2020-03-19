@@ -5,12 +5,14 @@
 #include <sstream>
 #include <cstdlib>
 #include <functional>
+#include <math.h>
 //#include <ofstream>
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "/10 Intellect(Smart)", "/10 Stamina(Smoker)", "/10 Stamina(Average)", "/10 Stamina(Healthy)", "/10 Mastery(Inept)", "/10 Mastery(Average)", "/10 Mastery(Skilled)", "/10 Versatility(Useless)", "/10 Versatility(Average)", "/10 Versatility(Competent)"};
-//int i = 0;
+
+
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -26,12 +28,12 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 		statbox->setText(std::to_string(val).append(globaltraits[2]));
 
 	}
-		if (i>0)
-		{
-			i = i*2;
-			checkbox->setText(std::to_string(i));
+		//if (i>0)
+		//{
+			//i = i*2;
+			//checkbox->setText(std::to_string(i));
 			
-		}
+		//}
 		
 	}
 
@@ -39,54 +41,98 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 	{
 		auto val = (rand() % 10) + 1;
 		auto i = val;
-		if (i <= 4){
+		if (val <= 4){
 		statbox_2->setText(std::to_string(val).append(globaltraits[3]));
-		} else if (i >= 4 && i <= 7){
+		} else if (val >= 4 && val <= 7){
 		statbox_2->setText(std::to_string(val).append(globaltraits[4]));
-		} else if (i >= 8){
+		} else if (val >= 8){
 		statbox_2->setText(std::to_string(val).append(globaltraits[5]));
 	}
+		//if (i>0)
+		//{
+			//i = i*2;
+			//checkbox->setText(std::to_string(i));
+			
+		//}
 	}
 
 	void signalHandler_3(tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr checkbox)
 	{
 		auto val = (rand() % 10) + 1;
 		auto i = val;
-		if (i <= 4){
+		if (val <= 4){
 		statbox_3->setText(std::to_string(val).append(globaltraits[6]));
-		} else if (i >= 4 && i <= 7){
+		} else if (val >= 4 && val <= 7){
 		statbox_3->setText(std::to_string(val).append(globaltraits[7]));
-		} else if (i >= 8){
+		} else if (val >= 8){
 		statbox_3->setText(std::to_string(val).append(globaltraits[8]));
 	}
+		//if (i>0)
+		//{
+			//i = i*2;
+			//checkbox->setText(std::to_string(i));
+			
+		//}
 	}
 
 	void signalHandler_4(tgui::EditBox::Ptr statbox_4, tgui::EditBox::Ptr checkbox)
 	{
 		auto val = (rand() % 10) + 1;
 		auto i = val;
-		if (i <= 4){
+		if (val <= 4){
 		statbox_4->setText(std::to_string(val).append(globaltraits[9]));
-		} else if (i >= 4 && i <= 7){
+		} else if (val >= 4 && val <= 7){
 		statbox_4->setText(std::to_string(val).append(globaltraits[10]));
-		} else if (i >= 8){
+		} else if (val >= 8){
 		statbox_4->setText(std::to_string(val).append(globaltraits[11]));
 	}
+		//if (i>0)
+		//{
+			//i = i*2;
+			//checkbox->setText(std::to_string(i));
+			
+		//}
 	}
 	void signalMeaning(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr statbox_4, tgui::EditBox::Ptr checkbox)
 	{
 		sf::RenderWindow window_2(sf::VideoMode{800, 600}, "Stat Meanings");
 		tgui::Gui gui2{window_2};
-		//int stam = std::stoi(statbox->getText());
-		//int vers = std::stoi(statbox_2->getText());
-		//std::string Damage = (stam*2 + vers*2);
-		sf::Text text1;
+		std::string scales[3] {" Health", " Mana", " Damage"};
+
+		std::string mint = statbox->getText();
+		std::string msta = statbox_2->getText();
+		std::string mmas = statbox_3->getText();
+		std::string mver = statbox_4->getText();
+		int intl = std::stoi(mint);
+		int stam = std::stoi(msta);
+		int mast = std::stoi(mmas);
+		int vers = std::stoi(mver);
+		int hp = (stam*10 + mast*0.5);
+		int mana = (intl*2 + 30);
+		int dmg = (stam*2+50 + vers*0.2);
+		sf::Text HP;
 		sf::Font font1;
-		text1.setFont(font1);
-		text1.setCharacterSize(40);
-		text1.setFillColor(sf::Color::White);
-		text1.setString("");
-		text1.setPosition(sf::Vector2f(20.f, 100.f));
+		HP.setFont(font1);
+		HP.setCharacterSize(40);
+		HP.setFillColor(sf::Color::Green);
+		HP.setString("");
+		HP.setPosition(sf::Vector2f(20.f, 100.f));
+		sf::Text MANA;
+		MANA.setFont(font1);
+		MANA.setCharacterSize(40);
+		MANA.setFillColor(sf::Color::Blue);
+		MANA.setString("");
+		MANA.setPosition(sf::Vector2f(20.f, 300.f));
+		sf::Text DMG;
+		DMG.setFont(font1);
+		DMG.setCharacterSize(40);
+		DMG.setFillColor(sf::Color::Red);
+		DMG.setString("");
+		DMG.setPosition(sf::Vector2f(20.f, 500.f));
+	
+		
+
+
 
 		if (!font1.loadFromFile("Manjari-Thin.otf"))
 	{
@@ -98,8 +144,10 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 			sf::Event event_2;
 			while (window_2.pollEvent(event_2))
 			{
-			text1.setString(checkbox->getText());
-			//titletext.setString(titlebox->getText());
+			HP.setString(std::to_string(hp).append(scales[0]));
+			MANA.setString(std::to_string(mana).append(scales[1]));
+			DMG.setString(std::to_string(dmg).append(scales[2]));
+
 
 
 
@@ -113,7 +161,9 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 
 
 		window_2.clear();
-		window_2.draw(text1);
+		window_2.draw(HP);
+		window_2.draw(MANA);
+		window_2.draw(DMG);
 		window_2.display();
 		}
 	}
@@ -140,6 +190,13 @@ int main()
 	RP.setFillColor(sf::Color::White);
 	RP.setString("RP Character Generator");
 	RP.setPosition(sf::Vector2f(100.f, 0.f));
+	
+	sf::Text twig;
+	twig.setFont(font);
+	twig.setCharacterSize(20);
+	twig.setFillColor(sf::Color::White);
+	twig.setString("Stat Clarification");
+	twig.setPosition(sf::Vector2f(600.f, 350.f));
 
 	sf::Text trait;
 	trait.setFont(font);
@@ -167,7 +224,7 @@ int main()
 	randomizetext.setCharacterSize(20);
 	randomizetext.setFillColor(sf::Color::White);
 	randomizetext.setString("Randomize Your Stats");
-	randomizetext.setPosition(sf::Vector2f(600.f, 300.f));
+	randomizetext.setPosition(sf::Vector2f(600.f, 250.f));
 
 	sf::Text nametext;
 	nametext.setFont(font);
@@ -175,7 +232,6 @@ int main()
 	nametext.setFillColor(sf::Color::White);
 	nametext.setString("Name:");
 	nametext.setPosition(sf::Vector2f(300.f, 400.f));
-	
 	
 	sf::RenderWindow window{{800, 600}, "Window"};	
 		tgui::Gui gui{window};	
@@ -193,7 +249,7 @@ int main()
 	tgui::EditBox::Ptr statbox_4 = tgui::EditBox::create();
 		gui.add(statbox_4);
 	tgui::EditBox::Ptr checkbox = tgui::EditBox::create();
-		gui.add(checkbox);
+		//gui.add(checkbox);
 	
 	tgui::Button::Ptr meaningbutton = tgui::Button::create(); //meaning button
 		gui.add(meaningbutton);
@@ -210,7 +266,7 @@ int main()
 	tgui::Button::Ptr button_4 = tgui::Button::create();
 		button->connect("pressed", signalHandler_4, std::ref(statbox_4), std::ref(checkbox));
 
-
+	meaningbutton->setPosition(600, 400);
 	statbox->setSize({190, 20});
 	statbox_2->setSize({190, 20});
 	statbox_3->setSize({190, 20});
@@ -221,8 +277,11 @@ int main()
 	statbox_3->setPosition(600, 100);
 	statbox_4->setPosition(600, 50);
 	namebox->setPosition(300, 450);
-	button->setPosition(600, 250);
-
+	button->setPosition(600, 300);
+	
+	//sf::Image image;
+	//sf::Sprite sprite;
+	//sprite.setTexture(image);
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------	
 	
@@ -232,6 +291,10 @@ int main()
 	std::cout << "pucko" << std::endl;
 	}
 
+	//if (!texture.loadFromFile("image.png"))
+	//{
+    	//std::cout << "Really Dumb" << std::endl;
+	//}
 
 
 
@@ -262,6 +325,9 @@ int main()
 
         window.clear();
         gui.draw();
+	//window.draw(sprite);
+	//texture.update(image);
+	window.draw(twig);
 	window.draw(nametext);
 	window.draw(titletext);
 	window.draw(randomizetext);
