@@ -5,6 +5,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <functional>
+#include <ofstream>
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -64,6 +65,8 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 		statbox_4->setText(std::to_string(val).append(globaltraits[11]));
 	}
 	}
+	void signalMeaning(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr::statbox_4)
+	sf::RenderWindow window
 
 		
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -136,7 +139,10 @@ int main()
 		gui.add(statbox_3);
 	tgui::EditBox::Ptr statbox_4 = tgui::EditBox::create();
 		gui.add(statbox_4);
-
+	
+	tgui::Button::Ptr meaningbutton = tgui::Button::create(); //meaning button
+		gui.add(meaningbutton);
+		meaningbutton->connect("pressed", signalMeaning, std::ref(statbox));
 	
 
 	tgui::Button::Ptr button = tgui::Button::create();
