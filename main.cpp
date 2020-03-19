@@ -5,7 +5,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <functional>
-#include <ofstream>
+//#include <ofstream>
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -65,8 +65,28 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 		statbox_4->setText(std::to_string(val).append(globaltraits[11]));
 	}
 	}
-	void signalMeaning(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr::statbox_4)
-	sf::RenderWindow window
+	void signalMeaning(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr statbox_4)
+	{
+		sf::RenderWindow window_2(sf::VideoMode{800, 600}, "Stat Meanings");
+		tgui::Gui gui2{window_2};
+		auto val = (rand() % 10) + 1;
+	
+		while (window_2.isOpen())
+		{
+			sf::Event event_2;
+			while (window_2.pollEvent(event_2))
+			{
+			if (event_2.type == sf::Event::Closed)
+				window_2.close();
+			gui2.handleEvent(event_2);
+			}
+		window_2.clear();
+		window_2.display();
+		}
+	}
+
+
+	
 
 		
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -142,7 +162,7 @@ int main()
 	
 	tgui::Button::Ptr meaningbutton = tgui::Button::create(); //meaning button
 		gui.add(meaningbutton);
-		meaningbutton->connect("pressed", signalMeaning, std::ref(statbox));
+		meaningbutton->connect("pressed", signalMeaning, std::ref(statbox), std::ref(statbox_2), std::ref(statbox_3), std::ref(statbox_4));
 	
 
 	tgui::Button::Ptr button = tgui::Button::create();
