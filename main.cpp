@@ -24,7 +24,7 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 	std::string stam = statbox_2->getText();
 	std::string mas = statbox_3->getText();
 	std::string vers = statbox_4->getText();
-	std::ofstream savea ("save.txt");
+	std::ofstream savea (Name);
 	if (savea.is_open())
 	{
 		savea << Name << std::endl << Titel << std::endl << mana << std::endl << stam << std::endl << mas << std::endl << vers << std::endl;
@@ -237,7 +237,7 @@ int main()
 	//tgui::EditBox::Ptr loadbox = tgui::EditBox::create();
 		//gui.add(load);
 	tgui::EditBox::Ptr savebox = tgui::EditBox::create();
-		gui.add(savebox);
+		//gui.add(savebox);
 /////////////////////////////////////////////////////////////////		
 	tgui::EditBox::Ptr statbox = tgui::EditBox::create();
 		gui.add(statbox);
@@ -266,7 +266,8 @@ int main()
 		button->connect("pressed", signalHandler_4, std::ref(statbox_4), std::ref(checkbox));
 	tgui::Button::Ptr button_save = tgui::Button::create();
 		gui.add(button_save);
-		button_save->connect("pressed", savevoid, std::ref(statbox), std::ref(statbox_2), std::ref(statbox_3), std::ref(statbox_4), std::ref(checkbox), std::ref(namebox), std::ref(titlebox));
+		button_save->connect("pressed", savevoid, std::ref(statbox), std::ref(statbox_2), std::ref(statbox_3), std::ref(statbox_4), std::ref(namebox), std::ref(titlebox));
+
 
 	meaningbutton->setPosition(600, 400);
 	statbox->setSize({190, 20});
