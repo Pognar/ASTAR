@@ -7,6 +7,7 @@
 #include <functional>
 #include <math.h>
 //#include <ofstream>
+#include <fstream>
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -15,7 +16,21 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+	void savevoid(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr statbox_4, tgui::EditBox::Ptr namebox, tgui::EditBox::Ptr titlebox)
+{
+	std::string Name = namebox->getText();
+	std::string Titel = titlebox->getText();	
+	std::string mana = statbox->getText();
+	std::string stam = statbox_2->getText();
+	std::string mas = statbox_3->getText();
+	std::string vers = statbox_4->getText();
+	std::ofstream savea ("save.txt");
+	if (savea.is_open())
+	{
+		savea << Name << std::endl << Titel << std::endl << mana << std::endl << stam << std::endl << mas << std::endl << vers << std::endl;
+		savea.close();
+	}
+}
 	void signalHandler(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr checkbox)
 	{
 		auto val = (rand() % 10) + 1;
@@ -28,13 +43,7 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 		statbox->setText(std::to_string(val).append(globaltraits[2]));
 
 	}
-		//if (i>0)
-		//{
-			//i = i*2;
-			//checkbox->setText(std::to_string(i));
-			
-		//}
-		
+
 	}
 
 	void signalHandler_2(tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr checkbox)
@@ -48,12 +57,7 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 		} else if (val >= 8){
 		statbox_2->setText(std::to_string(val).append(globaltraits[5]));
 	}
-		//if (i>0)
-		//{
-			//i = i*2;
-			//checkbox->setText(std::to_string(i));
-			
-		//}
+	
 	}
 
 	void signalHandler_3(tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr checkbox)
@@ -67,12 +71,7 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 		} else if (val >= 8){
 		statbox_3->setText(std::to_string(val).append(globaltraits[8]));
 	}
-		//if (i>0)
-		//{
-			//i = i*2;
-			//checkbox->setText(std::to_string(i));
-			
-		//}
+		
 	}
 
 	void signalHandler_4(tgui::EditBox::Ptr statbox_4, tgui::EditBox::Ptr checkbox)
@@ -86,12 +85,7 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 		} else if (val >= 8){
 		statbox_4->setText(std::to_string(val).append(globaltraits[11]));
 	}
-		//if (i>0)
-		//{
-			//i = i*2;
-			//checkbox->setText(std::to_string(i));
-			
-		//}
+
 	}
 	void signalMeaning(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr statbox_4, tgui::EditBox::Ptr checkbox)
 	{
@@ -239,7 +233,12 @@ int main()
 		gui.add(namebox);
 	tgui::EditBox::Ptr titlebox = tgui::EditBox::create();
 		gui.add(titlebox);
-		
+/////////////////////////////////////////////////////////////////
+	//tgui::EditBox::Ptr loadbox = tgui::EditBox::create();
+		//gui.add(load);
+	tgui::EditBox::Ptr savebox = tgui::EditBox::create();
+		gui.add(savebox);
+/////////////////////////////////////////////////////////////////		
 	tgui::EditBox::Ptr statbox = tgui::EditBox::create();
 		gui.add(statbox);
 	tgui::EditBox::Ptr statbox_2 = tgui::EditBox::create();
@@ -265,6 +264,9 @@ int main()
 		button->connect("pressed", signalHandler_3, std::ref(statbox_3), std::ref(checkbox));
 	tgui::Button::Ptr button_4 = tgui::Button::create();
 		button->connect("pressed", signalHandler_4, std::ref(statbox_4), std::ref(checkbox));
+	tgui::Button::Ptr button_save = tgui::Button::create();
+		gui.add(button_save);
+		button_save->connect("pressed", savevoid, std::ref(statbox), std::ref(statbox_2), std::ref(statbox_3), std::ref(statbox_4), std::ref(checkbox), std::ref(namebox), std::ref(titlebox));
 
 	meaningbutton->setPosition(600, 400);
 	statbox->setSize({190, 20});
@@ -279,9 +281,6 @@ int main()
 	namebox->setPosition(300, 450);
 	button->setPosition(600, 300);
 	
-	//sf::Image image;
-	//sf::Sprite sprite;
-	//sprite.setTexture(image);
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------	
 	
@@ -290,12 +289,6 @@ int main()
 	{
 	std::cout << "pucko" << std::endl;
 	}
-
-	//if (!texture.loadFromFile("image.png"))
-	//{
-    	//std::cout << "Really Dumb" << std::endl;
-	//}
-
 
 
 
@@ -325,8 +318,6 @@ int main()
 
         window.clear();
         gui.draw();
-	//window.draw(sprite);
-	//texture.update(image);
 	window.draw(twig);
 	window.draw(nametext);
 	window.draw(titletext);
