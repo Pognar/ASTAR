@@ -6,7 +6,6 @@
 #include <cstdlib>
 #include <functional>
 #include <math.h>
-//#include <ofstream>
 #include <fstream>
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -16,6 +15,78 @@ std::string globaltraits[12] {"/10 Intellect(Dumb)", "/10 Intellect(Average)", "
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	void load(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr statbox_4, tgui::EditBox::Ptr namebox, tgui::EditBox::Ptr titlebox)
+{
+	sf::RenderWindow window_3(sf::VideoMode{600, 400}, "Load");
+	tgui::Gui gui3{window_3};
+	tgui::EditBox::Ptr loader = tgui::EditBox::create();
+		gui3.add(loader);
+	
+	std::string error = "File could not be found";
+	std::ifstream file_name;
+	std::string file_name_input;
+	std::string data[5];
+	std::string current_line;
+									
+
+	
+		while (window_3.isOpen())
+		{
+			sf::Event event_3;
+			while (window_3.pollEvent(event_3))
+			{
+				
+			
+
+				if (event_3.key.code == sf::Keyboard::Return)
+				{
+					file_name_input = loader->getText();
+					file_name.open(file_name_input.c_str());
+				
+					while (file_name.is_open())
+					{
+						getline(file_name, current_line);
+					
+						if (current_line == file_name_input)
+						{
+							for(auto x = 0; x < 5; x++)
+							{
+								getline(file_name, data[x]);
+							}
+							
+							namebox->setText(current_line);
+							titlebox->setText(data[0]);
+							statbox->setText(data[1]);
+							statbox_2->setText(data[2]);
+							statbox_3->setText(data[3]);
+							statbox_4->setText(data[4]);
+							file_name.close();
+							window_3.close();
+						
+						}
+
+					}
+
+				}
+
+
+
+
+				if (event_3.type == sf::Event::Closed)
+					window_3.close();
+				gui3.handleEvent(event_3);
+				}
+
+			window_3.clear();
+			gui3.draw();
+			window_3.display();
+		}
+}
+	
+
+
+
 	void savevoid(tgui::EditBox::Ptr statbox, tgui::EditBox::Ptr statbox_2, tgui::EditBox::Ptr statbox_3, tgui::EditBox::Ptr statbox_4, tgui::EditBox::Ptr namebox, tgui::EditBox::Ptr titlebox)
 {
 	std::string Name = namebox->getText();
@@ -233,12 +304,9 @@ int main()
 		gui.add(namebox);
 	tgui::EditBox::Ptr titlebox = tgui::EditBox::create();
 		gui.add(titlebox);
-/////////////////////////////////////////////////////////////////
-	//tgui::EditBox::Ptr loadbox = tgui::EditBox::create();
-		//gui.add(load);
+
 	tgui::EditBox::Ptr savebox = tgui::EditBox::create();
-		//gui.add(savebox);
-/////////////////////////////////////////////////////////////////		
+		
 	tgui::EditBox::Ptr statbox = tgui::EditBox::create();
 		gui.add(statbox);
 	tgui::EditBox::Ptr statbox_2 = tgui::EditBox::create();
@@ -248,9 +316,9 @@ int main()
 	tgui::EditBox::Ptr statbox_4 = tgui::EditBox::create();
 		gui.add(statbox_4);
 	tgui::EditBox::Ptr checkbox = tgui::EditBox::create();
-		//gui.add(checkbox);
+		
 	
-	tgui::Button::Ptr meaningbutton = tgui::Button::create(); //meaning button
+	tgui::Button::Ptr meaningbutton = tgui::Button::create();
 		gui.add(meaningbutton);
 		meaningbutton->connect("pressed", signalMeaning, std::ref(statbox), std::ref(statbox_2), std::ref(statbox_3), std::ref(statbox_4), std::ref(checkbox));
 	
@@ -268,7 +336,11 @@ int main()
 		gui.add(button_save);
 		button_save->connect("pressed", savevoid, std::ref(statbox), std::ref(statbox_2), std::ref(statbox_3), std::ref(statbox_4), std::ref(namebox), std::ref(titlebox));
 
+	tgui::Button::Ptr button_load = tgui::Button::create();
+		gui.add(button_load);
+		button_load->connect("pressed", load, std::ref(statbox), std::ref(statbox_2), std::ref(statbox_3), std::ref(statbox_4), std::ref(namebox), std::ref(titlebox));
 
+	button_load->setPosition(0, 50);
 	meaningbutton->setPosition(600, 400);
 	statbox->setSize({190, 20});
 	statbox_2->setSize({190, 20});
@@ -305,7 +377,6 @@ int main()
 		
 	if (event.key.code == sf::Keyboard::Return)
 	{
-		//std:: cout << i << std::endl;
 		
 		text.setString(namebox->getText());
 		titletext.setString(titlebox->getText());
