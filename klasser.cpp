@@ -37,9 +37,14 @@ void foe::remaininghp()
 {
 foe dmg_func;
 foe hp_func;
+Combat fireblast_sub;
 Combat go_to_spells;
-
-
+	
+//ANVÄND &HP POINTER
+	hp_func.hp = hp_func.hp-fireblast_sub.fireblast_dmg;
+	cout << "Your enemy has ";
+	cout << hp_func.hp;
+	cout << "HP left" << endl;
 
 
 	//cout << dmg_func.dmg << endl;
@@ -47,7 +52,7 @@ Combat go_to_spells;
 	//hp_func.hp = hp_func.hp-dmg_func.dmg;
 	//cout << "\n Your enemy has " << endl;
 	//cout << hp_func.hp;
-//go_to_spells.spells();
+go_to_spells.spells();
 }
 
 
@@ -58,13 +63,14 @@ foe dmgtofoe;
 foe hpcheck;
 Combat combat_dmg;
 
-	hpcheck.hp-combat_dmg.fireblast_dmg;
+
+	//hpcheck.hp-combat_dmg.fireblast_dmg;
 
 	cout << "Your fireblast did ";
 	cout << combat_dmg.fireblast_dmg;
-	cout << "Damage " << endl;
-	cout << "Your enemy has ";
-	cout << hpcheck.hp;
+	cout << " Damage " << endl;
+	//cout << "Your enemy has ";
+	//cout << hpcheck.hp;
 	hpcheck.remaininghp();
 	//auto roll = (rand() % 10) + 1;
 	//auto i = roll;
