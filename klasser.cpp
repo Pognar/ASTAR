@@ -2,10 +2,10 @@
 #include <math.h>
 #include <stdlib.h> 
 using namespace std;
+
 //KLASS(Combatsystem)
 class Combat
 {
-
 	public:
 //int-variabler
 	int fireblast_dmg = 15;
@@ -41,9 +41,9 @@ Combat fireblast_sub;
 Combat go_to_spells;
 	
 //ANVÄND &HP POINTER
-	hp_func.hp = hp_func.hp-fireblast_sub.fireblast_dmg;
+	//hp = hp-fireblast_sub.fireblast_dmg;
 	cout << "Your enemy has ";
-	cout << hp_func.hp;
+	cout << hp;
 	cout << "HP left" << endl;
 
 
@@ -57,21 +57,17 @@ go_to_spells.spells();
 
 
 
-void Combat::fireblast()
+void Combat::fireblast(foe &enemy)
 {
-foe dmgtofoe;
-foe hpcheck;
-Combat combat_dmg;
-
-
-	//hpcheck.hp-combat_dmg.fireblast_dmg;
-
+foe go_to_enemy;
+	
+	enemy.hp = enemy.hp-fireblast_dmg;
 	cout << "Your fireblast did ";
-	cout << combat_dmg.fireblast_dmg;
+	cout << fireblast_dmg;
 	cout << " Damage " << endl;
 	//cout << "Your enemy has ";
 	//cout << hpcheck.hp;
-	hpcheck.remaininghp();
+	//enemy.remaininghp();
 	//auto roll = (rand() % 10) + 1;
 	//auto i = roll;
 	//cout << roll << endl;
