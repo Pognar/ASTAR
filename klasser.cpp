@@ -3,111 +3,81 @@
 #include <stdlib.h> 
 using namespace std;
 
-//KLASS(Combatsystem)
-class Combat
-{
-	public:
-//int-variabler
-	int fireblast_dmg = 15;
-//funktioner
-	void spells();
-	void fireblast();
-	void kicknscream();
-	void Pyrotorment();
-};
-//KLASS(weakmage)
 class character
 {
 	public:
-//----Int-variabler
-	int hp = 100;
+	int my_hp = 100;
+	int foe_hp = 100;
+	
+	void hpcheck();
 };
-//KLASS(terrible foe)
-class foe
+
+class combat
 {
 	public:
-//-----int-variabler
-	int dmg = 0;
-	int hp = 100;
-//funktioner
-	void remaininghp();
+	int fireblast_dmg = 15;
+	int kick_dmg = 10;
+
+	void fireblast(character &enemy);
+	void kicknscream(character &enemy2);	
+	
+	void spell_list();
+
 };
 
-void foe::remaininghp()
+
+//funktionsdeklarationer
+
+void combat::fireblast(character &enemy)
 {
-foe dmg_func;
-foe hp_func;
-Combat fireblast_sub;
-Combat go_to_spells;
-	
-//ANVÄND &HP POINTER
-	//hp = hp-fireblast_sub.fireblast_dmg;
-	cout << "Your enemy has ";
-	cout << hp;
-	cout << "HP left" << endl;
-
-
-	//cout << dmg_func.dmg << endl;
-	//cout << "Press enter to check functionality of function\n";
-	//hp_func.hp = hp_func.hp-dmg_func.dmg;
-	//cout << "\n Your enemy has " << endl;
-	//cout << hp_func.hp;
-go_to_spells.spells();
+	enemy.foe_hp = enemy.foe_hp - fireblast_dmg;
+	cout << enemy.foe_hp << endl;
 }
 
-
-
-void Combat::fireblast(foe &enemy)
+void combat::kicknscream(character &enemy2)
 {
-foe go_to_enemy;
-	
-	enemy.hp = enemy.hp-fireblast_dmg;
-	cout << "Your fireblast did ";
-	cout << fireblast_dmg;
-	cout << " Damage " << endl;
-	//cout << "Your enemy has ";
-	//cout << hpcheck.hp;
-	//enemy.remaininghp();
-	//auto roll = (rand() % 10) + 1;
-	//auto i = roll;
-	//cout << roll << endl;
-	//if (i <= 3){
-	//cout << "\n Your attack was lacking in both focus and general competence - and missed";	
-	//}else if (i >= 3){
-	//i+10;
-	//cout << roll << endl;
-	//dmgtofoe.dmg = roll;
-	//hpcheck.remaininghp();
-	//}
-	
+	enemy2.foe_hp = enemy2.foe_hp - kick_dmg;
+	cout << enemy2.foe_hp << endl;
 
 }
-			
-	
 
-
-
-void Combat::spells()
+void character::hpcheck()
 {
-Combat go_to_spell;
+combat func_call;
+character foe;
+character hp_check;
+	cout << "Hello" << endl;
 	
+	
+	int i;
+	do
+	{	
 	cout << "\n Which spell would you like to use?\n";
 	cout << "Type(1): Fireblast\n Type(2): Kick and scream\n Type(3): Pyrotorment" << endl;
-	int i;
 	cin >> i;
-	if (i <= 1){
-	go_to_spell.fireblast();
-  	} else if (i <= 2){
-	go_to_spell.spells();
-	}
-	
-}
+		if (i <= 1){
+			func_call.fireblast(foe);
+  				}else if (i <= 2){
+					func_call.kicknscream(foe);
+						}
+							}while(foe_hp >= 0 || my_hp >=0);
 
-int main()
-{
-Combat my_object;
-	cout << "\n You've encountered a terrible foe, you're a weak mage and you left your pumped up kicks at home.";
-	cout << "\n Running is not an option";
-	my_object.spells();
+
+		
 }
-//auto val = (rand() % 10) + 1;
+	
+
+
+
+
+
+int main(){
+combat func_call;
+character foe;
+character hp_check;
+
+	hp_check.hpcheck();	 
+
+	
+
+}
